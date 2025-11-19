@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // JUnit 5
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+//    // JUnit 4
+//    testImplementation 'junit:junit:4.13.2'
+
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-java:7.15.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.15.0'
+
+    // Selenium (Web)
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.20.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+
+    // Rest Assured (API)
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    testImplementation 'org.json:json:20240303'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.27.0'
+
+    // Logging
+    testImplementation 'org.slf4j:slf4j-simple:2.0.12'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// TASK @api
+tasks.register('apiTest', JavaExec) {
+    dependsOn testClasses
+    mainClass = "io.cucumber.core.cli.Main"
+    classpath = sourceSets.test.runtimeClasspath
+    systemProperty "allure.results.directory", "build/allure-results"
+    args = [
+            "--plugin", "pretty",
+            "--plugin", "html:build/reports/cucumber/api.html",
+            "--plugin", "json:build/reports/cucumber/api.json",
+            "--plugin", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+            "--glue", "api.stepdef",
+            "--tags", "@api",
+            "src/test/resources/api/features"
+    ]
+}
+
+// TASK @web
+tasks.register('webTest', JavaExec) {
+    dependsOn testClasses
+    mainClass = "io.cucumber.core.cli.Main"
+    classpath = sourceSets.test.runtimeClasspath
+    systemProperty "allure.results.directory", "build/allure-results"
+    args = [
+            "--plugin", "pretty",
+            "--plugin", "html:build/reports/cucumber/web.html",
+            "--plugin", "json:build/reports/cucumber/web.json",
+            "--plugin", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+            "--glue", "web.stepdef",
+            "--tags", "@web",
+            "src/test/resources/web/features"
+    ]
+}
+
+allure {
+    version = "2.27.0"
+    adapter {
+        frameworks {
+            cucumber7jvm {
+                enabled = true
+            }
+        }
+    }
+}
