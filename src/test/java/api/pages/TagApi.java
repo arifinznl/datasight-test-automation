@@ -10,4 +10,11 @@ public class TagApi extends BaseApi {
                 .then().log().all()
                 .extract().response();
     }
+
+    public Response getPostsByTag(String tag) {
+        return baseRequest()
+                .get("/tag/"  + tag + "/post")
+                .then().log().all()
+                .extract().response();
+    }
 }

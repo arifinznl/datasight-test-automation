@@ -43,6 +43,10 @@ test {
     useJUnitPlatform()
 }
 
+tasks.named("test") {
+    finalizedBy("webTest", "apiTest")
+}
+
 // TASK @api
 tasks.register('apiTest', JavaExec) {
     dependsOn testClasses

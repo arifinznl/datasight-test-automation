@@ -13,3 +13,7 @@ Feature: User API Testing
 
     When Delete the user
     Then Response status code should be 200
+
+  Scenario: Create user with invalid email
+    When Create user with email "testdummy" firstname "Zen1" lastname "Zen2"
+    Then Response status code should be 400

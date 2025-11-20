@@ -17,6 +17,11 @@ public class TagApiSteps {
         response = tagApi.getTags();
     }
 
+    @When("Get posts for tag {string}")
+    public void getPostsForTag(String tag) {
+        response = tagApi.getPostsByTag(tag);
+    }
+
     @Then("Tags response status should be {int}")
     public void tagsResponseStatusShouldBe(int code) {
         assertEquals(code, response.statusCode());

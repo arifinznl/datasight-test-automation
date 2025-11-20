@@ -23,21 +23,25 @@ public class UserApiSteps {
 
     @Then("Response status code should be {int}")
     public void responseStatusCodeShouldBe(int code) {
+
         assertEquals(code, response.statusCode());
     }
 
     @When("Get that user")
     public void getThatUser() {
+
         response = userApi.getUser(userId);
     }
 
     @When("Update user firstname to {string}")
     public void updateUserFirstnameTo(String newName) {
+
         response = userApi.updateUser(userId, newName);
     }
 
     @When("Delete the user")
     public void deleteTheUser() {
+
         response = userApi.deleteUser(userId);
     }
 }
