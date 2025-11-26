@@ -8,6 +8,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
+    // Headless
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
@@ -30,9 +31,10 @@ public class DriverFactory {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-tools");
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--window-size=1920,1080");
 
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
 
         System.out.println("Chrome started in ALWAYS-HEADLESS mode.");
     }
@@ -61,17 +63,24 @@ public class DriverFactory {
 //            case "chrome":
 //            default:
 //                WebDriverManager.chromedriver().setup();
-//                webDriver = new ChromeDriver();
+//                ChromeOptions options = new ChromeOptions();
+//
+//                // Membuka Chrome dengan size full
+//                options.addArguments("--start-maximized");
+//
+//                webDriver = new ChromeDriver(options);
 //        }
 //
 //        driver.set(webDriver);
 //    }
 
     public static void quitDriver() {
+        // Headless
         if (driver != null) {
             driver.quit();
             driver = null;
         }
+        // Lokal Chrome
 //        if (driver.get() != null) {
 //            driver.get().quit();
 //            driver.remove();

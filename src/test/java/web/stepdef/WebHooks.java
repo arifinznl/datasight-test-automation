@@ -10,6 +10,7 @@ public class WebHooks {
 
     @Before("@web")
     public void beforeWeb() {
+        // headless
         DriverFactory.initDriver();
 
 //        DriverFactory.initDriver(System.getProperty("browser", "chrome"));
