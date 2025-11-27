@@ -1,5 +1,5 @@
 @web @post
-Feature: Dashboard Login
+Feature: Post Management
 
   @create-post
   Scenario: create post content
